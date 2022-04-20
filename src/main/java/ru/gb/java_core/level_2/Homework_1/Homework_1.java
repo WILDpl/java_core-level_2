@@ -4,30 +4,32 @@ public class Homework_1 {
 
     public static void main(String[] args) {
 
+        // вариант через наследование интерфейсов
         Action[] actions = {
-            (Action) new Human("Superman", 1000, 100, false),
-            (Action) new Cat("Matroskin", 50, 10, false),
+            (Action) new Human("Superman", 1000, 10, false),
+            (Action) new Cat("Matroskin", 50, 5, false),
             (Action) new Robot("R2S2", 500, 0, false),
         };
 
         for (Action action : actions) {
             action.run(500);
-            action.jump(10);
+            action.jump(5);
         }
 
         //
         System.out.println();
         //
 
+        // вариант через разные интерфейсы
         Run[] runs = {
-            new Human("Superman", 1000, 100, false),
-            new Cat("Matroskin", 50, 10, false),
+            new Human("Superman", 1000, 10, false),
+            new Cat("Matroskin", 50, 5, false),
             new Robot("R2D2", 500, 0, false),
         };
 
         Jump[] jumps = {
-                new Human("Superman", 1000, 100, false),
-                new Cat("Matroskin", 50, 10, false),
+                new Human("Superman", 1000, 10, false),
+                new Cat("Matroskin", 50, 5, false),
                 new Robot("R2D2", 500, 0, false),
         };
 
@@ -36,7 +38,7 @@ public class Homework_1 {
         }
 
         for (Jump jump : jumps) {
-            jump.jump(10);
+            jump.jump(5);
         }
     }
 
