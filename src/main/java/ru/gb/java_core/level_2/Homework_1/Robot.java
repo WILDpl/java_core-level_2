@@ -47,7 +47,7 @@ public class Robot implements Run, Jump, Action {
     public void run(int length) {
         if (status) {
             if (length <= runningDistance) {
-                System.out.printf(kind + " %s преодолеть дистанцию %d м успешно.\n", name, length);
+                System.out.printf(kind + " %s преодолел дистанцию %d м успешно.\n", name, length);
                 runningDistance -= length;
                 status = true;
                 distance += "__" + length + "__";
