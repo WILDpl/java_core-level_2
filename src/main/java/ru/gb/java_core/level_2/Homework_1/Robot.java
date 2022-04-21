@@ -5,14 +5,14 @@ public class Robot implements Run, Jump, Action {
     private String name;
     private int runningDistance;
     private int jumpHeight;
-    private boolean statusRun;
-    private boolean statusJump;
+    private boolean status;
+    private String distance = "(start)> ";
 
     public Robot(String name, int runningDistance, int jumpHeight, boolean status) {
         this.name = name;
         this.runningDistance = runningDistance;
         this.jumpHeight = jumpHeight;
-        this.statusRun = status;
+        this.status = status;
     }
 
     public String getName() {
@@ -27,27 +27,40 @@ public class Robot implements Run, Jump, Action {
         return jumpHeight;
     }
 
-    public boolean isStatusRun() {
-        return statusRun;
+    public boolean isStatus() {
+        return status;
     }
 
-    public boolean isStatusJump() {
-        return statusJump;
+    public String getDistance() {
+        return distance;
     }
 
     @Override
     public void jump(int height) {
-         System.out.printf(kind + " %s не умеет прыгать.\n", name);
+        if (status) {
+            System.out.printf(kind + " %s не умеет прыгать.\n", name);
+            status = false;
+        }
     }
 
     @Override
     public void run(int length) {
-        if (length <= runningDistance) {
-            System.out.printf(kind + " %s проехал дистанцию %d успешно.\n", name, length);
-            statusRun = true;
-        } else {
-            System.out.printf(kind + " %s не смог проехать дистанцию %d (проехал только %d м).\n", name, length, runningDistance);
+        if (status) {
+            if (length <= runningDistance) {
+                System.out.printf(kind + " %s преодолеть дистанцию %d м успешно.\n", name, length);
+                runningDistance -= length;
+                status = true;
+                distance += "__" + length + "__";
+            } else {
+                System.out.printf(kind + " %s не смог преодолеть дистанцию %d м (проехал только %d м).\n", name, length, runningDistance);
+                status = false;
+            }
         }
+    }
+
+    @Override
+    public void action() {
+        System.out.println(getDistance() + " <(finish)");
     }
 }
 

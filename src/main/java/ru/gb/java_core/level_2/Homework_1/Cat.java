@@ -5,14 +5,14 @@ public class Cat implements Run, Jump, Action {
     private String name;
     private int runningDistance;
     private int jumpHeight;
-    private boolean statusRun;
-    private boolean statusJump;
+    private boolean status;
+    private String distance = "(start)> ";
 
     public Cat(String name, int runningDistance, int jumpHeight, boolean status) {
         this.name = name;
         this.runningDistance = runningDistance;
         this.jumpHeight = jumpHeight;
-        this.statusRun = status;
+        this.status = status;
     }
 
     public String getName() {
@@ -27,32 +27,46 @@ public class Cat implements Run, Jump, Action {
         return jumpHeight;
     }
 
-    public boolean isStatusRun() {
-        return statusRun;
+    public boolean isStatus() {
+        return status;
     }
 
-    public boolean isStatusJump() {
-        return statusJump;
+    public String getDistance() {
+        return distance;
     }
 
     @Override
     public void jump(int height) {
-        if (height <= jumpHeight) {
-            System.out.printf(kind + " %s перепрыгнул стену высотой %d успешно.\n", name, height);
-            statusJump = true;
-        } else {
-            System.out.printf(kind + " %s не смог перепрыгнуть стену высотой %d (подпрыгнул только на %d м).\n", name, height, jumpHeight);
+        if (status) {
+            if (height <= jumpHeight) {
+                System.out.printf(kind + " %s перепрыгнул стену высотой %d м успешно.\n", name, height);
+                status = true;
+                distance += "|" + height + "|";
+            } else {
+                System.out.printf(kind + " %s не смог перепрыгнуть стену высотой %d м (подпрыгнул только на %d м).\n", name, height, jumpHeight);
+                status = false;
+            }
         }
     }
 
     @Override
     public void run(int length) {
-        if (length <= runningDistance) {
-            System.out.printf(kind + " %s пробежал дистанцию %d успешно.\n", name, length);
-            statusRun = true;
-        } else {
-            System.out.printf(kind + " %s не смог пробежать дистанцию %d (пробежал только %d м).\n", name, length, runningDistance);
+        if (status) {
+            if (length <= runningDistance) {
+                System.out.printf(kind + " %s пробежал дистанцию %d м успешно.\n", name, length);
+                runningDistance -= length;
+                status = true;
+                distance += "__" + length + "__";
+            } else {
+                System.out.printf(kind + " %s не смог пробежать дистанцию %d м (пробежал только %d м).\n", name, length, runningDistance);
+                status = false;
+            }
         }
+    }
+
+    @Override
+    public void action() {
+        System.out.println(getDistance() + " <(finish)");
     }
 }
 
