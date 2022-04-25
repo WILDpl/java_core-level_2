@@ -6,19 +6,16 @@ public class Homework_2 {
 
     public static void main(String[] args) {
 
+        // массивы: arr3 - с 3 ошибками; arr2 - с 2 ошибками; arr1 - с 1 ошибкой; arr - без ошибок;
+        String[][] arr3 = { {"1","@","3","4"}, {"1","2","3","4"}, {"1","2","3","4"}, {"1","2","3","4","5"},{"1"} };
+        String[][] arr2 = { {"1","@","3","4"}, {"1","2","3","4"}, {"1","2","3","4"}, {"1","2","3","4","5"} };
+        String[][] arr1 = { {"1","@","3","4"}, {"1","2","3","4"}, {"1","2","3","4"}, {"1","2","3","4",} };
         String[][] arr = { {"1","2","3","4"}, {"1","2","3","4"}, {"1","2","3","4"}, {"1","2","3","4"} };
         int arrayLength = 4;
 
         try {
-//            arrayCheckSize(arr,arrayLength);
-//            System.out.println(arrayCheckSize(arr,arrayLength));
-//            arraySum(arr,arrayLength);
             System.out.println("Сумма элементов массива: " + arraySum(arr,arrayLength));
-        } catch (MyArraySizeException e) {
-//            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } catch (MyArrayDataException e) {
-//            System.out.println(e.getMessage());
+        } catch (MyArraySizeException | MyArrayDataException e) {
             e.printStackTrace();
         }
 
@@ -40,9 +37,11 @@ public class Homework_2 {
         return true;
     }
 
+    // метод суммирования элементов массива с преобразованием строк в число
     public static int arraySum(String[][] arr, int length) throws MyArraySizeException, MyArrayDataException {
         int arraySum = 0;
         int isNumber;
+
         if (arrayCheckSize(arr, length)) {
             for (int i = 0; i < arr.length; i++) {
                 for (int j = 0; j < arr[i].length; j++) {
@@ -58,17 +57,4 @@ public class Homework_2 {
         return arraySum;
     }
     
-    
-//                    else {
-//                    for (int j = 0; j < arr[i].length; j++) {
-//                        System.out.println(Integer.parseInt(arr[i][j]));
-////                        if ( checkInt = Integer.parseInt(arr[i][j]) ) {
-////                            throw new MyArrayDataException("Element is not a number: [" + i + "," + j + "].");
-////                        } else {
-////                            arraySum += Integer.parseInt(arr[i][j]);
-////                        }
-//                    }
-//                }
-
-
 }
