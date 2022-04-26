@@ -16,7 +16,8 @@ public class Homework_2 {
         try {
             System.out.println("Сумма элементов массива: " + arraySum(arr,arrayLength));
         } catch (MyArraySizeException | MyArrayDataException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }
@@ -56,5 +57,5 @@ public class Homework_2 {
         }
         return arraySum;
     }
-    
+
 }
