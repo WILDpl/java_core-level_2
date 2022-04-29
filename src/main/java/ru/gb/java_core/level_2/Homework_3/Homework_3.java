@@ -16,6 +16,7 @@ public class Homework_3 {
         int initCapacity = arrTest.length;
 
         analysisArrayList(arrTest, initCapacity);
+
         System.out.println();
 
         /* п.2
@@ -26,7 +27,7 @@ public class Homework_3 {
         тогда при запросе такой фамилии должны выводиться все телефоны.
         * */
         Phonebook book = new Phonebook();
-        book.addNewRow("Иванов И.В.","7(000)00-00-001");
+        book.addNewRow("Иванова И.В.","7(000)00-00-001");
         book.addNewRow("Петров А.С.","7(000)00-00-002");
         book.addNewRow("Иванов И.Х.","7(000)00-00-003");
         book.addNewRow("Иванов И.И.","7(000)00-00-004");
@@ -36,6 +37,20 @@ public class Homework_3 {
         book.addNewRow("Уткин В.С.","7(000)00-00-008");
         book.getPhoneBook();
         book.findPhone("Иванов");
+
+        System.out.println();
+
+        Phonebook2 book2 = new Phonebook2();
+        book2.addNewRow("7(000)00-00-001", "Иванова");
+        book2.addNewRow("7(000)00-00-002", "Петров");
+        book2.addNewRow("7(000)00-00-003","Иванов");
+        book2.addNewRow("7(000)00-00-004", "Иванов");
+        book2.addNewRow("7(000)00-00-005","Сидоров");
+        book2.addNewRow("7(000)00-00-006","Кузнецов");
+        book2.addNewRow("7(000)00-00-007","Пупкин");
+        book2.addNewRow("7(000)00-00-008","Уткин");
+        book2.getPhoneBook();
+        book2.findPhone("Иванов");
 
     }
 
@@ -63,7 +78,7 @@ public class Homework_3 {
 
     }
 
-    // п.2
+    // п.2.1 contains
     public static class Phonebook {
         HashMap<String, String> phoneBook = new HashMap<>();
 
@@ -75,9 +90,40 @@ public class Homework_3 {
         }
 
         public void findPhone(String name) {
-            System.out.printf("Поиск: %s\n", name);
+            System.out.printf("Поиск: %s\n", "%" + name + "%");
             for (Map.Entry<String, String> entry : phoneBook.entrySet()) {
                 if (entry.getKey().contains(name)) {
+                    System.out.println(entry.getKey() + "  \t\t" + entry.getValue());
+                }
+            }
+        }
+
+        public void getPhoneBook() {
+            StringBuilder book = new StringBuilder();
+            book.append("Телефонный справочник:\n");
+            for (Map.Entry<String, String> entry : phoneBook.entrySet()) {
+                // можно было вывести только номера телефонов, но решил вывести полную информацию
+                book.append(entry.getKey()).append("  \t\t").append(entry.getValue()).append("\n");
+            }
+            System.out.println(book);
+        }
+    }
+
+    // п.2.2 equals
+    public static class Phonebook2 {
+        HashMap<String, String> phoneBook = new HashMap<>();
+
+        public Phonebook2() {
+        }
+
+        public void addNewRow(String name, String phone) {
+            phoneBook.put(name, phone);
+        }
+
+        public void findPhone(String name) {
+            System.out.printf("Поиск: %s\n", name);
+            for (Map.Entry<String, String> entry : phoneBook.entrySet()) {
+                if (entry.getValue().equals(name)) {
                     System.out.println(entry.getKey() + "  \t\t" + entry.getValue());
                 }
             }
