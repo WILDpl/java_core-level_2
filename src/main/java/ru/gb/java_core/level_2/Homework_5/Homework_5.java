@@ -72,19 +72,18 @@ public class Homework_5 extends Thread {
     }
 
     // создаем массив заданного размера и заполняем его заданным значением
-
     public static float[] createAndFillFloatArray(int size, float value) {
         float[] arr = new float[size];
         Arrays.fill(arr, value);
         return arr;
     }
-    // проверка массива на кратность делителю
 
+    // проверка массива на кратность делителю
     public static boolean checkArrayForSplit(int size, int part) {
         return size % part == 0;
     }
-    // рассчитываем сгенерированный массив в один поток
 
+    // рассчитываем сгенерированный массив в один поток
     public static void arrayOneThread(float[] arr) {
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < arr.length; i++) {
@@ -92,8 +91,8 @@ public class Homework_5 extends Thread {
         }
         System.out.println("One thread time: " + (System.currentTimeMillis() - startTime) + " ms.\n");
     }
-    // разбиваем массив на заданное количество частей с помощью двухмерного массива
 
+    // разбиваем массив на заданное количество частей с помощью двухмерного массива
     public static float[][] splitArray(float[] arr, int size, int part) {
         int onePart = size / part;  // количество частей
         int onePartSize = 0;    // размер одной части
@@ -109,8 +108,8 @@ public class Homework_5 extends Thread {
         }
         return arrays;
     }
-    // собираем массив из разбитого двухмерного массива
 
+    // собираем массив из разбитого двухмерного массива
     public static float[] mergeArray(float[][] arr, int size) {
         float[] array = new float[size];    // пустой массив для сборки данных
         int onePartSize = 0;    // размер одной части
@@ -121,14 +120,15 @@ public class Homework_5 extends Thread {
         }
         return array;
     }
-    // метод создание нескольких потоков под рассчет каждого разделенного масиива
 
+    // метод создание нескольких потоков под расчет каждого разделенного массива
     public static void arrayManyThread(float[][] arr) throws InterruptedException {
         int onePart = arr.length;   // количество частей массива
         Thread[] threads = new Thread[onePart];
         for (int i = 0; i < onePart; i++) {
+            int offset = i * arr[i].length;   // смещение для формулы расчета разбитого массива для соблюдения точности расчета
             int part = i;
-            threads[i] = new Thread(() -> arrayManyCalc(arr, part));
+            threads[i] = new Thread(() -> arrayManyCalc(arr, part, offset));
             threads[i].start();
         }
 
@@ -139,12 +139,15 @@ public class Homework_5 extends Thread {
         }
 
     }
-    // пересчитываем элементы разделенного массива в заданной части
 
-    public static void arrayManyCalc(float[][] arr, int part) {
+    // пересчитываем элементы разделенного массива в заданной части с учетом смещения индекса как в исходном массиве
+    public static void arrayManyCalc(float[][] arr, int part, int offset) {
         for (int i = 0; i < arr[part].length; i++) {
-            arr[part][i] = (float) (arr[part][i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+            arr[part][i] = (float) (arr[part][i] * Math.sin(0.2f + (i + offset) / 5) * Math.cos(0.2f + (i + offset) / 5) * Math.cos(0.4f + (i + offset) / 2));
         }
+//        int p = part;
+//        int pp = arr[part].length - 1;
+//        System.out.printf("p: %d, pp: %d, arr[p][pp]: %f\n", p, pp + offset, arr[p][pp]);
     }
 
     // рассчитываем сгенерированный массив в несколько потоков
